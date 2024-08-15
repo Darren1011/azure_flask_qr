@@ -1,0 +1,25 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Start Backend",
+      "type": "shell",
+      "command": "python app.py",
+      "options": {
+        "cwd": "${workspaceFolder}/flask-react-qr"
+      },
+      "problemMatcher": [],
+      "isBackground": true
+    },
+    {
+      "label": "Start Frontend",
+      "type": "shell",
+      "command": "npm start",
+      "options": {
+        "cwd": "${workspaceFolder}/qr-frontend"
+      },
+      "problemMatcher": [],
+      "isBackground": true
+    }
+  ]
+}
