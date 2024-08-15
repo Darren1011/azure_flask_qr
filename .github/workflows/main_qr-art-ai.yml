@@ -66,4 +66,4 @@ jobs:
         with:
           app-name: 'qr-art-ai'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_951A4C08DC7344CCA06AA831EABFA45A }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_9265E15B535B4E9C869780DA9C681F5C }}
