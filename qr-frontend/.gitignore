@@ -10,6 +10,7 @@
 
 # production
 /build
+qr-frontend/build
 
 # misc
 .DS_Store
