@@ -25,7 +25,7 @@ const QRCodeGenerator = () => {
         }
 
         try {
-            const response = await axios.post('http://127.0.0.1:5000/generate-qr', formData, {
+            const response = await axios.post('http://127.0.0.1:8000/generate-qr', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
