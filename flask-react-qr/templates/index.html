@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator</title>
+</head>
+<body>
+    <h1>QR Code Generator</h1>
+    <form action="/generate-qr" method="post" enctype="multipart/form-data">
+        <label for="text_prompt">Text Prompt:</label>
+        <input type="text" id="text_prompt" name="text_prompt" required><br><br>
+
+        <label for="qr_code_data">QR Code Data:</label>
+        <input type="text" id="qr_code_data" name="qr_code_data" required><br><br>
+
+        <label for="image_prompt">Reference Image:</label>
+        <input type="file" id="image_prompt" name="image_prompt"><br><br>
+
+        <button type="submit">Generate QR Code</button>
+    </form>
+</body>
+</html>

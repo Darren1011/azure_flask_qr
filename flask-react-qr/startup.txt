@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# Navigate to the Flask backend directory and start the server
+cd flask-react-qr
+gunicorn --bind=0.0.0.0 --timeout 600 app:app

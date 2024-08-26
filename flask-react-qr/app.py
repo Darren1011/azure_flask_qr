@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, send_from_directory
+from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
 import os
@@ -7,7 +7,7 @@ from time import sleep
 from config import Config
 from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
 
-app = Flask(__name__, static_folder='../qr-frontend/build')
+app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
 
 app.config.from_object(Config)
@@ -22,6 +22,10 @@ def upload_to_azure(file_path, container_name, blob_name):
     with open(file_path, "rb") as data:
         blob_client.upload_blob(data, overwrite=True)
     return blob_client.url
+
+@app.route('/')
+def index():
+    return render_template('index.html')
 
 @app.route('/generate-qr', methods=['POST'])
 def generate_qr():
@@ -76,14 +80,6 @@ def generate_qr():
             return jsonify(result), 400
         else:
             sleep(3)
-
-@app.route('/', defaults={'path': ''})
-@app.route('/<path:path>')
-def serve_react_app(path):
-    if path != "" and os.path.exists(app.static_folder + '/' + path):
-        return send_from_directory(app.static_folder, path)
-    else:
-        return send_from_directory(app.static_folder, 'index.html')
 
 if __name__ == '__main__':
     app.run(debug=True, port=8000)
