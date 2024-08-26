@@ -1,11 +1,10 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, redirect, url_for
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
 import os
 import requests
 from time import sleep
-from config import Config
-from azure.storage.blob import BlobServiceClient, BlobClient, ContainerClient
+from config import Config, upload_to_azure_blob
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
@@ -14,14 +13,6 @@ app.config.from_object(Config)
 
 if not os.path.exists(app.config['UPLOAD_FOLDER']):
     os.makedirs(app.config['UPLOAD_FOLDER'])
-
-def upload_to_azure(file_path, container_name, blob_name):
-    """Uploads a file to Azure Blob Storage and returns the public URL."""
-    blob_service_client = BlobServiceClient.from_connection_string(app.config['AZURE_STORAGE_CONNECTION_STRING'])
-    blob_client = blob_service_client.get_blob_client(container=container_name, blob=blob_name)
-    with open(file_path, "rb") as data:
-        blob_client.upload_blob(data, overwrite=True)
-    return blob_client.url
 
 @app.route('/')
 def index():
@@ -39,7 +30,7 @@ def generate_qr():
             filename = secure_filename(image_file.filename)
             image_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
             image_file.save(image_path)
-            image_prompt = upload_to_azure(image_path, app.config['AZURE_CONTAINER_NAME'], filename)
+            image_prompt = upload_to_azure_blob(image_path, app.config['AZURE_CONTAINER_NAME'], filename)
 
     payload = {
         "functions": [{"url": "https://gooey.ai/functions/", "trigger": "pre"}],
@@ -75,7 +66,7 @@ def generate_qr():
             return jsonify({"error": "Failed to get QR code status"}), 500
         result = response.json()
         if result["status"] == "completed":
-            return jsonify(result)
+            return render_template('result.html', qr_code_url=result["output"]["output_images"][0])
         elif result["status"] == "failed":
             return jsonify(result), 400
         else:

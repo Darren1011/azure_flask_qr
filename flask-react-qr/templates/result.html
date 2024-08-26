@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Result</title>
+</head>
+<body>
+    <h1>Generated QR Code</h1>
+    <div>
+        <img src="{{ qr_code_url }}" alt="Generated QR Code" style="border: 1px solid #000; padding: 10px;">
+    </div>
+    <br>
+    <a href="{{ url_for('index') }}">Generate Another QR Code</a>
+</body>
+</html>

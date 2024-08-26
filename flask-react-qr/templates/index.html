@@ -7,12 +7,12 @@
 </head>
 <body>
     <h1>QR Code Generator</h1>
-    <form action="/generate-qr" method="post" enctype="multipart/form-data">
+    <form action="{{ url_for('generate_qr') }}" method="post" enctype="multipart/form-data">
         <label for="text_prompt">Text Prompt:</label>
-        <input type="text" id="text_prompt" name="text_prompt" required><br><br>
+        <input type="text" id="text_prompt" name="text_prompt"><br><br>
 
         <label for="qr_code_data">QR Code Data:</label>
-        <input type="text" id="qr_code_data" name="qr_code_data" required><br><br>
+        <input type="text" id="qr_code_data" name="qr_code_data"><br><br>
 
         <label for="image_prompt">Reference Image:</label>
         <input type="file" id="image_prompt" name="image_prompt"><br><br>
